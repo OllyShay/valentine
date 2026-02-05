@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>For Aduke ❤️</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #fff0f5, #ffe6ee);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    .card {
+      background: white;
+      padding: 35px 45px;
+      border-radius: 14px;
+      text-align: center;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+      max-width: 440px;
+      z-index: 2;
+    }
+
+    h1 {
+      color: #d6336c;
+      margin-bottom: 15px;
+    }
+
+    #letter {
+      min-height: 160px;
+      font-size: 16px;
+      line-height: 1.6;
+      color: #444;
+      text-align: left;
+      white-space: pre-wrap;
+    }
+
+    .buttons {
+      margin-top: 25px;
+      position: relative;
+      height: 60px;
+      opacity: 0;
+      transition: opacity 1.5s ease;
+    }
+
+    button {
+      padding: 12px 22px;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      position: absolute;
+    }
+
+    .yes {
+      background-color: #ff4d6d;
+      color: white;
+      left: 60px;
+    }
+
+    .no {
+      background-color: #e0e0e0;
+      color: #333;
+      right: 60px;
+    }
+
+    #response {
+      margin-top: 25px;
+      font-size: 18px;
+      color: #d6336c;
+      font-weight: bold;
+    }
+
+    .heart {
+      position: fixed;
+      top: -10px;
+      font-size: 20px;
+      animation: fall 3s linear forwards;
+      color: #ff4d6d;
+      z-index: 1;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h1>Aduke ❤️</h1>
+
+    <div id="letter"></div>
+
+    <div class="buttons" id="buttons">
+      <button class="yes" onclick="sayYes()">Yes 💕</button>
+      <button class="no" id="noBtn">No 🙃</button>
+    </div>
+
+    <div id="response"></div>
+  </div>
+
+  <audio id="music" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_0c8f3a88c5.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const letterLines = [
+      "I’ve been thinking about how to say this.",
+      "Not because I don’t know how I feel,",
+      "but because some feelings deserve to be said gently.",
+      "",
+      "You bring calm to my chaos,",
+      "light to my days,",
+      "and warmth without even trying.",
+      "",
+      "Being with you feels right in a way I can’t explain.",
+      "",
+      "So this is me, choosing honesty over hesitation.",
+      "",
+      "Aduke, will you be my Valentine?"
+    ];
+
+    const letterDiv = document.getElementById("letter");
+    const buttons = document.getElementById("buttons");
+    const noBtn = document.getElementById("noBtn");
+    const music = document.getElementById("music");
+
+    let lineIndex = 0;
+    let charIndex = 0;
+
+    function typeLine() {
+      if (lineIndex < letterLines.length) {
+        if (charIndex < letterLines[lineIndex].length) {
+          letterDiv.innerHTML += letterLines[lineIndex][charIndex];
+          charIndex++;
+          setTimeout(typeLine, 40);
+        } else {
+          letterDiv.innerHTML += "\n";
+          lineIndex++;
+          charIndex = 0;
+          setTimeout(typeLine, 600);
+        }
+      } else {
+        buttons.style.opacity = 1;
+      }
+    }
+
+    window.onload = () => {
+      setTimeout(() => {
+        music.volume = 0;
+        music.play();
+        let v = 0;
+        const fade = setInterval(() => {
+          if (v < 0.4) {
+            v += 0.02;
+            music.volume = v;
+          } else {
+            clearInterval(fade);
+          }
+        }, 200);
+      }, 1500);
+
+      setTimeout(typeLine, 1000);
+    };
+
+    noBtn.addEventListener("mouseover", () => {
+      const x = Math.random() * 200 - 100;
+      const y = Math.random() * 80 - 40;
+      noBtn.style.transform = `translate(${x}px, ${y}px)`;
+    });
+
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerHTML = "❤️";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = Math.random() * 20 + 15 + "px";
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 3000);
+    }
+
+    function sayYes() {
+      document.getElementById("response").innerHTML =
+        "You just made my heart very happy 💖<br><br>Love always,<br><strong>Your Valentine</strong>";
+
+      setInterval(createHeart, 200);
+    }
+  </script>
+
+</body>
+</html>
